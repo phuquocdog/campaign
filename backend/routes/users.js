@@ -49,6 +49,10 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res) {
+  if (req.param.token != process.env.ACCESS_TOKEN) {
+      res.send('You have not permission to action');
+      return 0;
+  }
   transfer(req.body).then((e) => {
     console.log(e.toHex());
   });
