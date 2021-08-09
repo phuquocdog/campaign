@@ -8,11 +8,11 @@ const BN = require('bn.js');
 
 async function transfer(data) {
 
-  if (data.status != 'succeeded') {
+  if (data.event.type != 'charge:confirmed') {
     return 0;
   }
 
-  const BOB = data.metadata.wallet;
+  const BOB = data.event.data.metadata.custom;
   const provider = new WsProvider(process.env.WS || 'ws://127.0.0.1:9944');
   // Instantiate the API
   const api = await ApiPromise.create({provider});
@@ -49,6 +49,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res) {
+  console.log(req.body)
   if (req.param.token != process.env.ACCESS_TOKEN) {
       res.send('You have not permission to action');
       return 0;
