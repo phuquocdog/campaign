@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
+var request = require('request');
+
 // Import the API, Keyring and some utility functions
 const { ApiPromise,WsProvider } = require('@polkadot/api');
 const { Keyring } = require('@polkadot/keyring');
 const BN = require('bn.js');
+
 
 async function transfer(data) {
 
@@ -45,6 +48,7 @@ async function transfer(data) {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  
   res.send(req.body)
 });
 
@@ -56,6 +60,18 @@ router.post('/', function(req, res) {
   }
   transfer(req.body).then((e) => {
     console.log(e.toHex());
+    let hash = e.toHex();
+  });
+  var wallet = data.event.data.metadata.custom;
+  request.post({
+      'url' : process.env.TELEGRAM_ENDPOINT,
+      'json': {
+        'chat_id' : process.env.TELEGRAM_CHAT_ID || '',
+        'text': 'A Holder with wallet address:' + wallet +
+        '\nJust buy 1,000,000 PQD at https://buy.phuquoc.dog'
+        '\nTransfer sent with hash: ' + hash,
+        'disable_notification': 'true'
+      }
   });
   res.send('Recevied webook');
 });

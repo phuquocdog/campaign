@@ -1,23 +1,43 @@
 import logo from './logo.svg';
 import './App.css';
 import CheckoutForm from './CheckoutForm';
+import {useState, useEffect} from 'react';
 
-
-function App() {
-  function checkout() {
-
-    console.log('A');
+const Thanks = (props) => {
+  if (props.isPayment) {
+      return (
+      <p>
+        Thanks For the Payment
+      </p>
+    );
   }
+  return <></>;
+}
+
+const App = () => {
+  const [isPayment, setIsPayment] = useState(false);
+  
+  useEffect(() => {
+
+    window.addEventListener('change', (event) => {
+      //console.log(event)
+      //setIsPayment(true);
+
+    });
+
+  });
+const handleEvent = () => {
+    alert("I was clicked");
+  };
   return (
     <div class="container">
       <div class="py-5 text-center">
         <img class="logo d-block mx-auto mb-4" src="https://gblobscdn.gitbook.com/spaces%2F-MfYDzBxtTdyfUgSfrld%2Favatar-1627488491088.png?alt=media" alt="" width="72" height="72"/>
         <h2>Checkout form</h2>
         <p class="lead">Buy Phu Quoc Dog Coin and Join the moon mission. 🐶</p>
+        <Thanks isPayment={isPayment} />
       </div>
-    
-
-
+  
 
       <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
@@ -50,7 +70,7 @@ function App() {
         </div>
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Billing address</h4>
-          <CheckoutForm />
+          <CheckoutForm isPayment={handleEvent}/>
         </div>
       </div>
 

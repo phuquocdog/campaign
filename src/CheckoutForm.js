@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 import Button from'react';
@@ -9,14 +9,15 @@ const initialValues = {
   wallet: ""
 };
 
-function CheckoutForm() 
-{
+const CheckoutForm = () => {
 
   const [values, setValues] = useState(initialValues);
+
   const handleSubmit = (e) => {
   	e.preventDefault();
 
   }
+
   const handleInputChange = (e) => {
   	console.log(e.target);
     const { name, value } = e.target;
@@ -25,9 +26,20 @@ function CheckoutForm()
       [name]: value,
     });
   };
+  const onChargeSuccess = () => {
+
+  	console.log('succeed');
+  }
+  const onChargeFailure = () => {
+  	console.log('onChargeFailure');
+  	//Thanks For the Payment
+  }
   
+
   return (
+
       <form class="needs-validation">
+
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First name</label>
@@ -82,11 +94,12 @@ function CheckoutForm()
                   cursor: 'pointer',
                 }}
                 customMetadata={values.wallet}
+                onChargeSuccess = {onChargeSuccess}
+                onChargeFailure = {onChargeFailure}
             >
             Pay with Coinbase
             </CoinbaseCommerceButton>            
           </form>
     );
 }
-
 export default CheckoutForm
