@@ -65,13 +65,15 @@ router.post('/', function(req, res) {
 });
 
 router.post('/webhook', function(req, res) {
-  let data = req.body.data
+  let data = req.body
+
+  console.log(process.env.TELEGRAM_ENDPOINT)
 
   if (!data) {
     res.send('Recevied webook something wrong');
     return false;
   }
-  let wallet = event.data.metadata.custom;
+  let wallet = data.event.data.metadata.custom;
   request.post({
       'url' : process.env.TELEGRAM_ENDPOINT,
       'json': {
