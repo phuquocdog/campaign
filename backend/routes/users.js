@@ -64,13 +64,7 @@ router.post('/', function(req, res) {
   res.send('Payment success');
 });
 
-router.post('/webook', function(req, res) {
-  console.log(req.body)
-  if (req.param.token != process.env.ACCESS_TOKEN) {
-      res.send('You have not permission to action');
-      return 0;
-  }
- 
+router.post('/webhook', function(req, res) {
   var wallet = req.body.data.event.data.metadata.custom;
   request.post({
       'url' : process.env.TELEGRAM_ENDPOINT,
