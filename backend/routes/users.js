@@ -77,8 +77,7 @@ router.post('/webook', function(req, res) {
       'json': {
         'chat_id' : process.env.TELEGRAM_CHAT_ID || '',
         'text': 'A Holder with wallet address:' + wallet +
-        '\nJust buy 1,000,000 PQD at https://buy.phuquoc.dog'
-        //'\nTransfer sent with hash: ' + hash,
+        '\nJust buy 1,000,000 PQD at https://buy.phuquoc.dog',
         'disable_notification': 'true'
       }
   });
