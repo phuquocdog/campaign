@@ -60,16 +60,25 @@ router.post('/', function(req, res) {
   }
   transfer(req.body).then((e) => {
     console.log(e.toHex());
-    let hash = e.toHex();
   });
-  var wallet = data.event.data.metadata.custom;
+  res.send('Payment success');
+});
+
+router.post('/webook', function(req, res) {
+  console.log(req.body)
+  if (req.param.token != process.env.ACCESS_TOKEN) {
+      res.send('You have not permission to action');
+      return 0;
+  }
+ 
+  var wallet = req.body.data.event.data.metadata.custom;
   request.post({
       'url' : process.env.TELEGRAM_ENDPOINT,
       'json': {
         'chat_id' : process.env.TELEGRAM_CHAT_ID || '',
         'text': 'A Holder with wallet address:' + wallet +
         '\nJust buy 1,000,000 PQD at https://buy.phuquoc.dog'
-        '\nTransfer sent with hash: ' + hash,
+        //'\nTransfer sent with hash: ' + hash,
         'disable_notification': 'true'
       }
   });
