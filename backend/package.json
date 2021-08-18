@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prod" : "pm2 start bin/www"
     "start": "nodemon ./bin/www --trace-warnings"
   },
   "dependencies": {
