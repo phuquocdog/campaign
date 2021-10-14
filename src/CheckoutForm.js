@@ -42,15 +42,12 @@ const CheckoutForm = () => {
     const web3 = new Web3(provider);
     const chainId = await web3.eth.getChainId();
 
-    console.log(chainId)
-
     //const signer = web3.getSigner()
     const address = await web3.eth.getAccounts();
     const ETHPLORER_TOKEN= 'EK-82oc6-zkcE1EG-AuqNJ';
     let url = 'https://api.ethplorer.io/getAddressInfo/' + address[0] + '?apiKey=' + ETHPLORER_TOKEN;
     const request = await axios.get(url)
-    console.log('list all token for this account' + url)
-    console.log(request)
+    
 
     if (request.data.hasOwnProperty('tokens')) {
         //
@@ -106,8 +103,9 @@ const CheckoutForm = () => {
         } else {
           alert('You are not enough condition to get PQD coin');
         }
+    } else {
 
-        
+      alert('You are not enough condition to get PQD coin');
     }
   }, [])
 
@@ -175,7 +173,7 @@ const CheckoutForm = () => {
             </div>
 
              <div class="mb-3">
-              <label for="username">Telegram</label>
+              <label for="username">Telegram <a target="blank" href="https://t.me/phuquocdog">[Join Telegram]</a></label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
