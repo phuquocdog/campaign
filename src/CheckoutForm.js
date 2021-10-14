@@ -71,17 +71,38 @@ const CheckoutForm = () => {
 
         if (claimn) {
           console.log('firstName', values.firstName)
-          // send a POST request
-          axios({
-            method: 'post',
-            url: 'https://buy.phuquoc.dog/api/airdrop',
-            data: {
+          let body = {
               name: values.firstName + ' ' + values.lastName,
               telegram: values.telegram,
               wallet: values.wallet,
               eth_address: address[0]
             }
-          });
+          const requestOptions = {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(body)
+          };
+          const response = await fetch('https://buy.phuquoc.dog/api/airdrop', requestOptions);
+          const data = await response.json();
+          console.log(data);
+
+          if (data.data == false) {
+            alert('You are not enough condition to get PQD coin');
+          } else {
+            alert('You are eligible to receive PQD, the system will automatically distribute after 24 hours ');
+          }
+
+          // send a POST request
+          // axios({
+          //   method: 'POST',
+          //   url: 'https://buy.phuquoc.dog/api/airdrop',
+          //   data: {
+          //     name: values.firstName + ' ' + values.lastName,
+          //     telegram: values.telegram,
+          //     wallet: values.wallet,
+          //     eth_address: address[0]
+          //   }
+          // });
         }
         
     }
