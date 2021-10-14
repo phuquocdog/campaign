@@ -33,8 +33,8 @@ const handleEvent = () => {
     <div class="container">
       <div class="py-5 text-center">
         <img class="logo d-block mx-auto mb-4" src="https://gblobscdn.gitbook.com/spaces%2F-MfYDzBxtTdyfUgSfrld%2Favatar-1627488491088.png?alt=media" alt="" width="72" height="72"/>
-        <h2>Checkout form</h2>
-        <p class="lead">Buy Phu Quoc Dog Coin and Join the moon mission. 🐶</p>
+        <h2>Airdrop From</h2>
+        <p class="lead">Airdrop Phu Quoc Dog Coin and Join the moon mission. 🐶</p>
         <Thanks isPayment={isPayment} />
       </div>
   
@@ -42,7 +42,7 @@ const handleEvent = () => {
       <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Your cart</span>
+            <span class="text-muted">Your Airdrop</span>
             <span class="badge badge-secondary badge-pill">1</span>
           </h4>
           <ul class="list-group mb-3">
@@ -59,17 +59,13 @@ const handleEvent = () => {
                 <h6 class="my-0">Promo code</h6>
                 <small>WE LOVE DOG</small>
               </div>
-              <span class="text-success">-$20</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total 1,000,000 PQD</span>
-              <strong>$80</strong>
-            </li>
+          
 
           </ul>
         </div>
         <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Billing address</h4>
+          <h4 class="mb-3">Your information</h4>
           <CheckoutForm isPayment={handleEvent}/>
         </div>
       </div>

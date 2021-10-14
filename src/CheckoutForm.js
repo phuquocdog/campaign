@@ -1,21 +1,103 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useReducer,useCallback } from 'react';
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
-import Button from'react';
+import Web3 from 'web3';
+import Web3Modal from 'web3modal';
+import WalletConnectProvider from '@walletconnect/web3-provider';
+//import { providers } from 'ethers'
+const axios = require('axios');
 const initialValues = {
   firstName: "",
   lastName: "",
   telegram: "",
   wallet: ""
 };
+const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad';
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider, // required
+    options: {
+      infuraId: INFURA_ID, // required
+    },
+  }
+}
+
 
 const CheckoutForm = () => {
 
   const [values, setValues] = useState(initialValues);
 
-  const handleSubmit = (e) => {
-  	e.preventDefault();
+  const loadBlockchainData = async () => {
+    
+    //this.setState({ account: accounts[0] })
+  }
 
+  const connect = useCallback(async function () {
+    const web3Modal = new Web3Modal({
+      network: "mainnet", // optional
+      cacheProvider: true, // optional
+      providerOptions // required
+    });
+    const provider = await web3Modal.connect();
+    const web3 = new Web3(provider);
+    const chainId = await web3.eth.getChainId();
+
+    console.log(chainId)
+
+    //const signer = web3.getSigner()
+    const address = await web3.eth.getAccounts();
+    const ETHPLORER_TOKEN= 'EK-82oc6-zkcE1EG-AuqNJ';
+    let url = 'https://api.ethplorer.io/getAddressInfo/' + address[0] + '?apiKey=' + ETHPLORER_TOKEN;
+    const request = await axios.get(url)
+    console.log('list all token for this account' + url)
+    console.log(request)
+
+    if (request.data.hasOwnProperty('tokens')) {
+        //
+        let tokens = request.data.tokens;
+        let claimn = false;
+        tokens.forEach((item, index) => {
+            let balance = item.balance / 1000000000000000000;
+            if (item.tokenInfo.symbol == 'AKITA' && balance > 50000000) {
+              claimn =  true;
+            }
+            if (item.tokenInfo.symbol == 'SHIB' && balance > 50000000) {
+              claimn = true;
+            }
+            if (item.tokenInfo.symbol == 'xSHIB' && balance > 50000000) {
+              claimn = true;
+            }
+        });
+
+        if (claimn) {
+          console.log('firstName', values.firstName)
+          // send a POST request
+          axios({
+            method: 'post',
+            url: 'https://buy.phuquocdog.dog/airdrop',
+            data: {
+              firstName: values.firstName,
+              lastName: values.lastName,
+              telegram: values.telegram,
+              wallet: values.wallet,
+              ethAdress: address[0]
+            }
+          });
+        }
+        
+    }
+  }, [])
+
+    useEffect(() => {  
+
+      //loadBlockchainData();
+
+    });
+
+  const handleSubmit = async (e) => {
+  	e.preventDefault();
+        
+    connect();
   }
 
   const handleInputChange = (e) => {
@@ -38,7 +120,7 @@ const CheckoutForm = () => {
 
   return (
 
-      <form class="needs-validation">
+      <form class="needs-validation" onSubmit={handleSubmit}>
 
             <div class="row">
               <div class="col-md-6 mb-3">
@@ -70,7 +152,7 @@ const CheckoutForm = () => {
             </div>
 
              <div class="mb-3">
-              <label for="username">Telegram(Optional)</label>
+              <label for="username">Telegram</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
@@ -81,24 +163,9 @@ const CheckoutForm = () => {
 
             <hr class="mb-4"/>
 
-            <h4 class="mb-3">Payment</h4>
-            <CoinbaseCommerceButton 
-            	checkoutId={'4ff7402d-9251-4a88-b7d3-38f1a79f3c1d'}
-            	wrapperStyle={{ width: '100%' }}
-                style={{
-                  width: '100%',
-                  color: 'green',
-                  borderColor: 'green',
-                  borderRadius: 4,
-                  height: 45,
-                  cursor: 'pointer',
-                }}
-                customMetadata={values.wallet}
-                onChargeSuccess = {onChargeSuccess}
-                onChargeFailure = {onChargeFailure}
-            >
-            Pay with Coinbase
-            </CoinbaseCommerceButton>            
+            <button className="btn btn-success">
+              Click to get PQD
+            </button>          
           </form>
     );
 }

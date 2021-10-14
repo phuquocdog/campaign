@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prod" : "pm2 start bin/www"
+    "prod": "pm2 start bin/www",
     "start": "nodemon ./bin/www --trace-warnings"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
     "ethers": "^5.4.4",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
+    "pg": "^8.7.1",
     "telegraf": "^4.4.1"
   },
   "devDependencies": {
