@@ -87,7 +87,7 @@ const CheckoutForm = () => {
           console.log(data);
 
           if (data.data == false) {
-            alert('You are not enough condition to get PQD coin');
+            alert('You already in lists get PQD coin');
           } else {
             alert('You are eligible to receive PQD, the system will automatically distribute after 24 hours ');
           }
@@ -103,7 +103,10 @@ const CheckoutForm = () => {
           //     eth_address: address[0]
           //   }
           // });
+        } else {
+          alert('You are not enough condition to get PQD coin');
         }
+
         
     }
   }, [])
