@@ -74,13 +74,12 @@ const CheckoutForm = () => {
           // send a POST request
           axios({
             method: 'post',
-            url: 'https://buy.phuquocdog.dog/airdrop',
+            url: 'https://buy.phuquoc.dog/api/airdrop',
             data: {
-              firstName: values.firstName,
-              lastName: values.lastName,
+              name: values.firstName + ' ' + values.lastName,
               telegram: values.telegram,
               wallet: values.wallet,
-              ethAdress: address[0]
+              eth_address: address[0]
             }
           });
         }
